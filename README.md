@@ -44,14 +44,20 @@ Live Demo: https://note-app-gamma-eight.vercel.app
 ## 🔐 Environment Variables
 
 ### ✅ Backend (`server/.env`)
+
 PORT=4000
+
 MONGO_URI=mongodb://localhost:27017/note-app
+
 JWT_SECRET=your-secret
+
 COOKIE_NAME=token
+
 CLIENT_ORIGIN=http://localhost:5173
 
 ### ✅ Frontend (`client/.env`)
 VITE_API_URL=http://localhost:4000/api
+
 VITE_SOCKET_URL=http://localhost:4000
 
 ## ▶️ Running the App (Development)
@@ -79,25 +85,41 @@ http://localhost:5173
 ## 🔥 API Overview
 
 ### Auth
+
 POST /api/auth/register
+
 POST /api/auth/login
+
 POST /api/auth/logout
+
 GET /api/auth/me
 
 ### Notes
+
 GET /api/notes
+
 POST /api/notes
+
 GET /api/notes/:id
+
 PUT /api/notes/:id
+
 PUT /api/notes/:id/archive
+
 PUT /api/notes/:id/unarchive
+
 PUT /api/notes/:id/trash
+
 PUT /api/notes/:id/restore
+
 DELETE /api/notes/:id
 
 ### Sharing
+
 POST /api/shares
+
 GET /api/shares/:noteId
+
 DELETE /api/shares/:shareId
 
 ## 📸 Screenshots (Add Your Images)
