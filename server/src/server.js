@@ -19,6 +19,10 @@ app.use(cors({
   origin: process.env.CLIENT_ORIGIN || 'https://note-app-gamma-eight.vercel.app',
   credentials: true
 }));
+app.options("*", cors({
+  origin: "https://note-app-gamma-eight.vercel.app",
+  credentials: true
+}));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
   next();
@@ -31,7 +35,7 @@ app.use('/api/shares', shareRoutes);
 
 const httpServer = createServer(app);
 const io = new SocketServer(httpServer, {
-  cors: { origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173', credentials: true }
+  cors: { origin: process.env.CLIENT_ORIGIN || 'https://note-app-gamma-eight.vercel.app', credentials: true }
 });
 
 io.on('connection', (socket) => {
