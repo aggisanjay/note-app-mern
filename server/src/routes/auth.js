@@ -4,7 +4,7 @@ import { signJwt, verifyJwt } from '../utils/jwt.js';
 
 const r = Router();
 const cookieName = process.env.COOKIE_NAME || 'token';
-const cookieOpts = { httpOnly: true, sameSite: 'lax', secure: false };
+const cookieOpts = { httpOnly: true, sameSite: 'none', secure: true };
 
 r.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
