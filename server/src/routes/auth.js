@@ -4,7 +4,13 @@ import { signJwt, verifyJwt } from '../utils/jwt.js';
 
 const r = Router();
 const cookieName = process.env.COOKIE_NAME || 'token';
-const cookieOpts = { httpOnly: true, sameSite: 'none', secure: true ,path: "/" };
+
+const cookieOpts = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  path: "/"
+};
 
 r.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
@@ -13,20 +19,27 @@ r.post('/register', async (req, res) => {
 
   const user = await User.create({ name, email, password });
   const token = signJwt({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie(cookieName, token, cookieOpts).json({ id: user._id, name: user.name, email: user.email });
+
+  res.cookie(cookieName, token, cookieOpts)
+     .json({ id: user._id, name: user.name, email: user.email });
 });
 
 r.post('/login', async (req, res) => {
   const { email, password } = req.body;
+
   const user = await User.findOne({ email });
-  if (!user || !(await user.compare(password))) return res.status(400).json({ message: 'Invalid credentials' });
+  if (!user || !(await user.compare(password)))
+    return res.status(400).json({ message: 'Invalid credentials' });
 
   const token = signJwt({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie(cookieName, token, cookieOpts).json({ id: user._id, name: user.name, email: user.email });
+
+  res.cookie(cookieName, token, cookieOpts)
+     .json({ id: user._id, name: user.name, email: user.email });
 });
 
 r.post('/logout', (req, res) => {
-  res.clearCookie(cookieName).json({ ok: true });
+  res.clearCookie(cookieName, cookieOpts)
+     .json({ ok: true });
 });
 
 r.get('/me', async (req, res) => {
@@ -40,10 +53,15 @@ r.get('/me', async (req, res) => {
     const user = await User.findById(decoded.id).select('name email');
     if (!user) return res.sendStatus(401);
 
-    res.json({ id: user._id, name: user.name, email: user.email });
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email
+    });
   } catch {
     return res.sendStatus(401);
   }
 });
 
 export default r;
+
